@@ -7,6 +7,8 @@ var mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+//~line 10
+var apiUsersRouter = require('./routes/api/users');
 var app = express();
 var config = require('./config.dev');
 
