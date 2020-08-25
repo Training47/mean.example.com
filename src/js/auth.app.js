@@ -24,6 +24,7 @@ var authApp = (function() {
       
           app.innerHTML=form;
         }
+
         function postRequest(formId, url){
             let form = document.getElementById(formId);
             form.addEventListener('submit', function(e){
@@ -48,9 +49,16 @@ var authApp = (function() {
               xhr.onload = function(){
                 let data = JSON.parse(xhr.response);
                 console.log(data);
-              }
-            });
-          }
+                if(data.success===true){
+                window.location.href = '/';
+                }else{
+                document.getElementById('formMsg').style.display='block';
+        }
+      }
+    });
+  }
+               
+              
     
         return {
           load: function(){
