@@ -14,9 +14,9 @@ var Users = new Schema({
     required: [true, 'Please enter a username'],
     unique: [true, 'Usernames must be unique']
   },
-  first_name: String,
-  last_name: String,
-  admin: {
+    first_name: String,
+    last_name: String,
+    admin: {
     type: Boolean,
     default: false
   }
