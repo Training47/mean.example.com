@@ -11,9 +11,11 @@ var LocalStrategy = require('passport-local').Strategy;
 var Users = require('./models/users');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var apiUsersRouter = require('./routes/api/users');
-var app = express();
 var apiAuthRouter = require('./routes/api/auth');
+var apiUsersRouter = require('./routes/api/users');
+
+
+var app = express();
 var config = require('./config.dev');
 
 //Connect to MongoDB
@@ -52,7 +54,7 @@ app.use(passport.session());
 passport.use(Users.createStrategy());
 
 
-var Users = require('./models/users');
+
 passport.serializeUser(function(user, done){
   done(null,{
     id: user._id,
