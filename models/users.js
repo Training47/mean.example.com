@@ -48,8 +48,8 @@ Users.pre('save', function(next){
   this.modified = new Date().toISOString();
   next();
 });
-Users.plugin(passportLocalMongoose);
+
 //Add unique validation properties to the model
 Users.plugin(uniqueValidator);
-
+Users.plugin(passportLocalMongoose);
 module.exports  = mongoose.model('Users', Users);

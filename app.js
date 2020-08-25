@@ -29,7 +29,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//~line 32 before routes
 app.use(require('express-session')({
   //Define the session store
   store: new MongoStore({
@@ -50,6 +49,7 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 
+passport.use(Users.createStrategy());
 
 
 var Users = require('./models/users');
@@ -70,7 +70,6 @@ passport.deserializeUser(function(user, done){
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/users', apiUsersRouter);
-//~line 74
 app.use('/api/auth', apiAuthRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
