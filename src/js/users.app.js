@@ -71,10 +71,9 @@ function createUser(){
             <a href="#" class="btn btn-primary">Cancel</a>
           </div>
         </div>
-        <div class="card-body">
-          <form id="registrationForm" class="card-body">
+        <div class="card-body">  
+          <form id="createUser" class="card-body">
             <div id="formMsg" class="alert alert-danger text-center">Your form has errors</div>
-
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="first_name">First Name</label>
@@ -109,6 +108,39 @@ function createUser(){
 
   app.innerHTML=form;
 }
+
+
+function postRequest(formId, url){
+  let form = document.getElementById(formId);
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    let formData = new FormData(form);
+    let uri = `${window.location.origin}${url}`;
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', uri);
+
+    xhr.setRequestHeader(
+      'Content-Type',
+      'application/json; charset=UTF-8'
+    );
+
+    let object = {};
+    formData.forEach(function(value, key){
+      object[key]=value;
+    });
+
+    xhr.send(JSON.stringify(object));
+    xhr.onload = function(){
+      let data = JSON.parse(xhr.response);
+      if(data.success===true){
+        window.location.href = '/';
+      }else{
+        document.getElementById('formMsg').style.display='block';
+      }
+    }
+  });
+}
      return {
       load: function(){
             let hash = window.location.hash;
@@ -118,6 +150,7 @@ function createUser(){
               case '#create':
                 // console.log('CREATE');
                 createUser();
+                postRequest('createUser', '/api/users');
                 break;
           
               case '#view':
