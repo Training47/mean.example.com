@@ -12,6 +12,7 @@ var Users = require('./models/users');
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
+var articlesRouter = require('./routes/articles');
 var apiAuthRouter = require('./routes/api/auth');
 var apiUsersRouter = require('./routes/api/users');
 var apiArticlesRouter = require('./routes/api/articles');
@@ -84,7 +85,8 @@ app.use(function(req,res,next){
   //exact matches.
   var whitelist = [
     '/',
-    '/auth'
+    '/auth',
+    '/articles'
   ];
 
   //req.url holds the current URL
@@ -99,7 +101,8 @@ app.use(function(req,res,next){
   //Allow access to dynamic endpoints
   var subs = [
     '/public/',
-    '/api/auth/'
+    '/api/auth/',
+    '/api/articles'
   ];
 
   //The query string provides a partial URL match beginning
@@ -124,6 +127,7 @@ app.use(function(req,res,next){
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
+app.use('/articles', articlesRouter);
 app.use('/api/users', apiUsersRouter);
 app.use('/api/articles', apiArticlesRouter);
 app.use('/api/auth', apiAuthRouter);
