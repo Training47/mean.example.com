@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var slug = require('slug');
- 
 
 //Create a schema
 var Articles = new Schema({
@@ -27,21 +26,6 @@ var Articles = new Schema({
   modified: {
     type: Date
   }
-
-//   hash: {
-//     type: String,
-//     required: [
-//       true,   
-//       'There was a problem creating your password'
-//     ]
-//   },
-//   salt: {
-//     type: String,
-//     required: [
-//       true, 
-//       'There was a problem creating your password'
-//     ]
-//   },
 });
 
 //Auto set the slug prior to validation
@@ -63,6 +47,5 @@ Articles.pre('validate', function(next){
 
   next();
 });
- 
-
+  
 module.exports = mongoose.model('Articles', Articles);

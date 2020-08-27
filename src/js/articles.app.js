@@ -1,19 +1,25 @@
 var articlesApp = (function () {
+
   function viewArticles() {
+
     let uri = `${window.location.origin}/api/articles`;
     let xhr = new XMLHttpRequest();
     xhr.open('GET', uri);
+
     xhr.setRequestHeader(
       'Content-Type',
       'application/json; charset=UTF-8'
     );
+
     xhr.send();
+
     xhr.onload = function () {
       let app = document.getElementById('app');
       let data = JSON.parse(xhr.response);
       let articles = data.articles;
       let table = '';
       let rows = '';
+
       //Loop each article record into it's own HTML table row, each article should
       //have a link a article view
       for (let i = 0; i < articles.length; i++) {
@@ -29,6 +35,7 @@ var articlesApp = (function () {
           </td>
         </tr>`;
       }
+
       //Create an articles panel, add a table to the panel, inject the rows into the
       //table
       table = `<div class="card">
@@ -51,6 +58,7 @@ var articlesApp = (function () {
           </table>
         </div>
       </div>`;
+
       //Append the HTML to the #app
       app.innerHTML = table;
     }
@@ -133,6 +141,42 @@ var articlesApp = (function () {
           <div class="float-right">
             <a href="#edit-${data.article._id}" class="btn btn-primary">Edit</a>
           </div>
+        </div>
+        <div class="card-body">
+          <div class="blockquote">${data.article.body}</div>
+          <br>
+          <div>Tagged: <em>${data.article.keywords}</em></div>
+        </div>
+      </div>
+      `;
+
+      app.innerHTML = card;
+    }
+  }
+
+  // View Article by slug outside of session
+  function viewArticle(slug){
+
+    let uri = `${window.location.origin}/api/articles/${slug}`;
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', uri);
+
+    xhr.setRequestHeader(
+      'Content-Type',
+      'application/json; charset=UTF-8'
+    );
+
+    xhr.send();
+
+    xhr.onload = function(){
+
+      let app = document.getElementById('app');
+      let data = JSON.parse(xhr.response);
+      let card = '';
+
+      card = `<div class="card">
+        <div class="card-header clearfix">
+          <h2 class="h3 float-left">${data.article.title}</h2>
         </div>
         <div class="card-body">
           <div class="blockquote">${data.article.body}</div>
@@ -323,42 +367,44 @@ var articlesApp = (function () {
         }
 
       }
-      return {
-        deleteArticle: function(id){
-          deleteArticle(id);
-        },
-        load: function () {
-          let hash = window.location.hash;
-          let hashArray = hash.split('-');
-          switch (hashArray[0]) {
-            case '#create':
-              console.log('CREATE');
-              createArticle();
-              processRequest('createArticle', '/api/articles', 'POST');
-              break;
-    
-            case '#view':
-              viewArticle(hashArray[1]);
-              break;
-    
-            case '#edit':
-              editArticle(hashArray[1]);
-              break;
-    
-            case '#delete':
-              deleteView(hashArray[1]);
-              break;
-    
-                default:
-                viewArticles();
-                break;
-            }
-          }
-        }
-      })()
-    
-    articlesApp.load();
-    
-    window.addEventListener("hashchange", function () {
-      articlesApp.load();
-    }) 
+
+  return {
+    deleteArticle: function(id){
+      deleteArticle(id);
+    },
+    load: function () {
+      let hash = window.location.hash;
+      let hashArray = hash.split('-');
+
+      switch (hashArray[0]) {
+        case '#create':
+          createArticle();
+          processRequest('createArticle', '/api/articles', 'POST');
+          break;
+
+        case '#view':
+          viewArticle(hashArray[1]);
+          break;
+
+        case '#edit':
+          editArticle(hashArray[1]);
+          break;
+
+        case '#delete':
+          deleteView(hashArray[1]);
+          break;
+
+        default:
+          viewArticles();
+          break;
+      }
+    }
+  }
+})()
+
+
+articlesApp.load();
+
+window.addEventListener("hashchange", function () {
+  articlesApp.load();
+})
