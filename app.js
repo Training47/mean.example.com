@@ -9,6 +9,7 @@ var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var Users = require('./models/users');
+var Articles = require('./models/articles');
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
@@ -55,6 +56,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(Users.createStrategy());
+passport.use(Articles.createStrategy());
 
 passport.serializeUser(function(user, done){
   done(null,{
