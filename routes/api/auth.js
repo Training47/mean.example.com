@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var Users = require('../../models/users');
+var Articles = require('../../models/articles');
 var passport = require('passport');
 
 

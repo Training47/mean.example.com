@@ -8,12 +8,13 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+
 var Users = require('./models/users');
 var Articles = require('./models/articles');
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
-var articlesRouter = require('./routes/articles');
+// var articlesRouter = require('./routes/articles');
 var apiAuthRouter = require('./routes/api/auth');
 var apiUsersRouter = require('./routes/api/users');
 var apiArticlesRouter = require('./routes/api/articles');
@@ -56,7 +57,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(Users.createStrategy());
-passport.use(Articles.createStrategy());
+
 
 passport.serializeUser(function(user, done){
   done(null,{
@@ -104,7 +105,7 @@ app.use(function(req,res,next){
   var subs = [
     '/public/',
     '/api/auth/',
-    '/api/articles'
+    '/articles'
   ];
 
   //The query string provides a partial URL match beginning
@@ -129,7 +130,7 @@ app.use(function(req,res,next){
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
-app.use('/articles', articlesRouter);
+// app.use('/articles', articlesRouter);
 app.use('/api/users', apiUsersRouter);
 app.use('/api/articles', apiArticlesRouter);
 app.use('/api/auth', apiAuthRouter);
