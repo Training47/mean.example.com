@@ -14,17 +14,19 @@ var Articles = require('./models/articles');
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
-// var articlesRouter = require('./routes/articles');
-var apiAuthRouter = require('./routes/api/auth');
+var articlesRouter = require('./routes/articles');
 var apiUsersRouter = require('./routes/api/users');
 var apiArticlesRouter = require('./routes/api/articles');
-
+var apiAuthRouter = require('./routes/api/auth');
 
 var app = express();
 var config = require('./config.dev');
 
 //Connect to MongoDB
 mongoose.connect(config.mongodb, { useNewUrlParser: true });
+
+//Test the file
+// console.log(config);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -55,9 +57,7 @@ app.use(require('express-session')({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
 passport.use(Users.createStrategy());
-
 
 passport.serializeUser(function(user, done){
   done(null,{
@@ -73,11 +73,11 @@ passport.deserializeUser(function(user, done){
   done(null, user);
 });
 
+//Working with Session Data
 app.use(function(req,res,next){
   res.locals.session = req.session;
   next();
 });
-
 //Session-based access control
 app.use(function(req,res,next){
   //Uncomment the following line to allow access to everything.
@@ -127,13 +127,15 @@ app.use(function(req,res,next){
   return res.redirect('/auth#login');
 });
 
+//Routes
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
-// app.use('/articles', articlesRouter);
+app.use('/articles', articlesRouter);
 app.use('/api/users', apiUsersRouter);
 app.use('/api/articles', apiArticlesRouter);
 app.use('/api/auth', apiAuthRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -151,3 +153,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
