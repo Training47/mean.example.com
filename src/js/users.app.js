@@ -326,9 +326,7 @@ return {
     
       switch(hashArray[0]){
         case '#create':
-          // console.log('CREATE');
           createUser();
-          // postRequest('createUser', '/api/users');
           processRequest('createUser', '/api/users', 'POST');
           break;
     
