@@ -3,6 +3,10 @@
 
 http://localhost:3000/auth#login
 
+Cornerstone for REST API development, JavaScript application development, and ExpressJS; a JavaScript framework for processing HTTP requests (aka back-end web framework).
+
+Key Concepts: FullStack JavaScript, ES6, JavaScript, REST API, HTTP verbs, reverse proxies, process management Reinforces: HTML, CSS, JavaScript, EcoSystems, data processing, sessions, templates, Apache.
+
 To start mean.example.com:
 
     1) Change directory at command prompt: cd mean.example.com
